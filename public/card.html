@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Card Details</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        width: 100vw;
+        align-items: center;
+        background: url("../photos/asfs.png") no-repeat center center fixed;
+        background-size: cover;
+        color: #fff; /* Ensure text color is readable on dark background */
+      }
+
+      #card-details {
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        position: relative;
+      }
+
+      .card-image {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+      }
+
+      .boxs-container {
+        position: relative;
+        transform: translateY(-100px);
+      }
+
+      .details-box {
+        background: rgba(0, 0, 0, 0.7); /* Black background with 70% opacity */
+        backdrop-filter: blur(10px); /* Apply blur effect */
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 0 20px;
+        text-align: center;
+      }
+      .details-box h2 {
+        margin: 0;
+        font-size: large;
+        color: #fff; /* Change to white for contrast */
+      }
+      .details-box h3 {
+        font-size: small;
+        color: #b6b6b6;
+        font-weight: 400;
+      }
+      .circle-btn,
+      .square-btn {
+        border: none;
+        color: #fff;
+        cursor: pointer;
+      }
+
+      .circle-btn {
+        background-color: #ddddddc4;
+        width: 35px;
+        height: 35px;
+        margin: 0;
+        padding: 0;
+        border-radius: 18px;
+        align-content: center;
+        justify-content: center;
+      }
+
+      .circle-btn-icon {
+        width: 30px;
+        margin: 2.5px;
+        padding: 0;
+        align-self: center;
+        print-color-adjust: #ffffff; /* Tint color (red in this example) */
+      }
+
+      .square-btn {
+        background-color: #cbcbcb;
+        color: #131313;
+        width: 40%;
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 4px;
+      }
+
+      .links-box {
+        background: rgba(0, 0, 0, 0.7); /* Black background with 70% opacity */
+        backdrop-filter: blur(10px); /* Apply blur effect */
+        padding: 20px;
+        width: 85%;
+        max-width: 600px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transform: translateY(-90px);
+      }
+
+      .link-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between; /* Distribute space between text and icon */
+        width: 100%; /* Make the link occupy full width */
+        max-width: 400px;
+
+        margin-bottom: 10px;
+        color: #007bff;
+        text-decoration: none;
+        padding: 5px;
+        box-sizing: border-box; /* Include padding in width calculation */
+      }
+
+      .link-item img {
+        width: 20px; /* Adjust size as needed */
+        height: 20px; /* Ensure icons are square */
+        margin-left: 10px; /* Space between icon and text */
+      }
+
+      .link-item:hover {
+        text-decoration: underline;
+      }
+
+      .link-item::after {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    </style>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+      import {
+        getFirestore,
+        doc,
+        getDoc,
+      } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyABa_88lCPYb9G7C2L350H52UvQGdjNYck",
+        appId: "1:507527578334:web:bdb82580e01375de11384f",
+        messagingSenderId: "507527578334",
+        projectId: "elite-tag-1",
+        authDomain: "elite-tag-1.firebaseapp.com",
+        storageBucket: "elite-tag-1.appspot.com",
+        measurementId: "G-CMZ9Z2TCLM",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      // Function to extract the card ID from the URL path
+      function getCardIdFromPath() {
+        const path = window.location.pathname;
+        return path.split("/").pop();
+      }
+
+      // Fetch card details from Firestore
+      async function fetchCardDetails() {
+        const cardId = getCardIdFromPath();
+        try {
+          const docRef = doc(db, "cards", cardId);
+          const docSnap = await getDoc(docRef);
+
+          if (docSnap.exists()) {
+            const card = docSnap.data();
+            console.log("Card Data:", card);
+
+            // Populate card details
+            const cardDetails = document.getElementById("card-details");
+            cardDetails.innerHTML = ""; // Clear the previous content
+
+            // Create card image element
+            const img = document.createElement("img");
+            img.src = card.imageUrl || "/../photos/Image.png";
+            img.alt = "Image";
+            img.classList.add("card-image");
+            cardDetails.appendChild(img);
+
+            // Create box container for card details
+            const boxsContainer = document.createElement("div");
+            boxsContainer.classList.add("boxs-container");
+
+            const detailsBox = document.createElement("div");
+            detailsBox.classList.add("details-box");
+            detailsBox.innerHTML = `
+          <h2>${card.name}</h2>
+          <h3>${card.job}</h3>
+          <div class="button-container">
+            <button class="circle-btn">
+              <img class="circle-btn-icon" src="../photos/54.png" alt="Icon 1" />
+            </button>
+            <button class="circle-btn">
+              <img class="circle-btn-icon" src="../photos/55.png" alt="Icon 2" />
+            </button>
+            <button class="circle-btn">
+              <img class="circle-btn-icon" src="../photos/56.png" alt="Icon 3" />
+            </button>
+          </div>
+          <div class="button-container">
+          <button onclick='downloadVCard(${JSON.stringify(card).replace(
+            /'/g,
+            "\\'"
+          )})' class="square-btn">Save as Contact</button>
+          <button onclick='shareVCard(${JSON.stringify(card).replace(
+            /'/g,
+            "\\'"
+          )})' class="square-btn">Share</button>
+          </div>
+        `;
+            boxsContainer.appendChild(detailsBox);
+            cardDetails.appendChild(boxsContainer);
+
+            // Populate links
+            populateLinks(card.links);
+          } else {
+            console.error("Card not found");
+            alert("Card not found.");
+          }
+        } catch (error) {
+          console.error("Error fetching card details:", error);
+          alert("Failed to load card details.");
+        }
+      }
+
+      // Function to open link using app if available, or fallback to web URL
+      function openLinkWithFallback(key, linkUrl) {
+        const socialMediaSchemes = {
+          Facebook: (link) => `fb://profile/${link.split("/").pop()}`,
+          Twitter: (link) =>
+            `twitter://user?screen_name=${link.split("/").pop()}`,
+          Instagram: (link) =>
+            `instagram://user?username=${link.split("/").pop()}`,
+          LinkedIn: (link) => `linkedin://profile/${link.split("/").pop()}`,
+        };
+
+        let modifiedLinkUrl = linkUrl;
+        Object.keys(socialMediaSchemes).forEach((platform) => {
+          if (key.toLowerCase().includes(platform.toLowerCase())) {
+            modifiedLinkUrl = socialMediaSchemes[platform](linkUrl);
+          }
+        });
+
+        const linkItem = document.createElement("a");
+        linkItem.href = linkUrl; // Default to web URL
+        linkItem.textContent = key;
+        linkItem.classList.add("link-item");
+        linkItem.rel = "noopener noreferrer"; // For security
+
+        linkItem.addEventListener("click", (e) => {
+          e.preventDefault();
+          // Try to open the app via iframe
+          const iframe = document.createElement("iframe");
+          iframe.style.display = "none";
+          iframe.src = modifiedLinkUrl;
+          document.body.appendChild(iframe);
+
+          // Fallback to web URL if app link fails
+          setTimeout(() => {
+            document.body.removeChild(iframe);
+            window.location.href = linkUrl;
+          }, 100);
+        });
+
+        return linkItem;
+      }
+
+      // Function to populate social media links
+      function populateLinks(links) {
+        const linksBoxElement = document.getElementById("links-list");
+        linksBoxElement.innerHTML = ""; // Clear existing content
+
+        if (links && Object.keys(links).length > 0) {
+          // Convert links object to an array of entries
+          const linksArray = Object.entries(links);
+
+          // Sort the array by the numerical value (assuming value is a number or can be converted to a number)
+          linksArray.sort((a, b) => {
+            // You can adjust the sorting logic based on your needs
+            const valueA = parseInt(a[1].match(/\d+/), 10) || 0; // Extract numerical value from URL
+            const valueB = parseInt(b[1].match(/\d+/), 10) || 0; // Extract numerical value from URL
+            return valueA - valueB;
+          });
+
+          // Populate sorted links
+          linksArray.forEach(([key, linkUrl]) => {
+            if (
+              !linkUrl.startsWith("http://") &&
+              !linkUrl.startsWith("https://")
+            ) {
+              linkUrl = "http://" + linkUrl;
+            }
+
+            let iconSrc = "";
+            switch (key.toLowerCase()) {
+              case "facebook":
+                iconSrc = "../photos/28.png"; // Path to your local Facebook icon
+                break;
+              case "youtube":
+                iconSrc = "../photos/27.png"; // Path to your local YouTube icon
+                break;
+              case "whatsapp":
+                iconSrc = "../photos/24.png"; // Path to your local WhatsApp icon
+                break;
+              default:
+                iconSrc = "../photos/done.png"; // Path to your local default icon
+            }
+
+            const linkItem = document.createElement("a");
+            linkItem.href = linkUrl;
+            linkItem.textContent = key;
+            linkItem.classList.add("link-item");
+            linkItem.rel = "noopener noreferrer";
+
+            // Create and add icon element
+            if (iconSrc) {
+              const icon = document.createElement("img");
+              icon.src = iconSrc;
+              icon.alt = `${key} Icon`;
+              linkItem.appendChild(icon); // Add icon to the end
+            }
+
+            linksBoxElement.appendChild(linkItem);
+          });
+        } else {
+          linksBoxElement.textContent = "No links available.";
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        fetchCardDetails();
+      });
+    </script>
+    <script>
+      function downloadVCard(card) {
+        const vCardData = `
+BEGIN:VCARD
+VERSION:3.0
+FN:${card.name}
+PHOTO:${card.imageUrl || "http://example.com/photo.jpg"}
+TEL;TYPE=CELL:${card.phone || "1234567890"}
+EMAIL:${card.email || "example@example.com"}
+TITLE:${card.job || "Job Title"}
+END:VCARD
+  `;
+
+        const blob = new Blob([vCardData], { type: "text/vcard" });
+        const link = document.createElement("a");
+        link.download = `${card.name || "Contact"}.vcf`;
+        link.href = window.URL.createObjectURL(blob);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      function shareVCard(card) {
+        const shareData = {
+          title: "Card Details",
+          text: `Check out ${card.name || "this contact"}!`,
+          url: window.location.href,
+        };
+
+        if (navigator.share) {
+          navigator.share(shareData).catch(console.error);
+        } else {
+          alert("Share functionality is not supported on this browser.");
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="card-details"></div>
+    <div class="links-box" id="links-list"><p>Loading...</p></div>
+  </body>
+</html>
