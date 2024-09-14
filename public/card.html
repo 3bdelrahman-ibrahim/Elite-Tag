@@ -390,18 +390,18 @@ END:VCARD
       }
 
       // Function to send an email
-      function sendMail(card) {
-        if (card.email) {
-          window.location.href = `mailto:${card.email}`; // Use template literal to insert the email
+      function sendMail(email) {
+        if (email) {
+          window.location.href = `mailto:${email}`; // Use template literal to insert the email
         } else {
           alert("Email address is not available.");
         }
       }
 
       // Function to send a message
-      function sendMessage(card) {
-        if (card.phone) {
-          window.location.href = `sms:${card.phone}`; // Use template literal to insert the phone number
+      function sendMessage(phone) {
+        if (phone) {
+          window.location.href = `sms:${phone}`; // Use template literal to insert the phone number
         } else {
           alert("Phone number is not available.");
         }
