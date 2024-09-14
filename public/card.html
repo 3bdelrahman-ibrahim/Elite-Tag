@@ -381,9 +381,9 @@ END:VCARD
         }
       }
       // Function to make a call
-      function makeCall(card) {
-        if (card.phone) {
-          window.location.href = `tel:${card.phone}`; // Use template literal to insert the phone number
+      function makeCall(phone) {
+        if (phone) {
+          window.location.href = `tel:${phone}`; // Use template literal to insert the phone number
         } else {
           alert("Phone number is not available.");
         }
