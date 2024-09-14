@@ -197,17 +197,26 @@
           <h2>${card.name}</h2>
           <h3>${card.job}</h3>
           <div class="button-container">
-<button class="circle-btn" onclick="makeCall()">
+<button class="circle-btn" onclick="makeCall(${JSON.stringify(card).replace(
+              /'/g,
+              "\\'"
+            )})">
   <img class="circle-btn-icon" src="/photos/54.png" alt="Call Icon" />
 </button>
 
 <!-- Mail Button -->
-<button class="circle-btn" onclick="sendMail()">
+<button class="circle-btn" onclick="sendMail(${JSON.stringify(card).replace(
+              /'/g,
+              "\\'"
+            )})">
   <img class="circle-btn-icon" src="/photos/55.png" alt="Mail Icon" />
 </button>
 
 <!-- Message Button -->
-<button class="circle-btn" onclick="sendMessage()">
+<button class="circle-btn" onclick="sendMessage(${JSON.stringify(card).replace(
+              /'/g,
+              "\\'"
+            )})">
   <img class="circle-btn-icon" src="/photos/56.png" alt="Message Icon" />
 </button>          </div>
           <div class="button-container">
@@ -379,18 +388,19 @@ END:VCARD
           alert("Share functionality is not supported on this browser.");
         }
       }
-      function makeCall() {
-        window.location.href = "tel:+1234567890"; // Replace with the phone number
+      // Function to make a call
+      function makeCall(card) {
+        window.location.href = `tel:${card.phone}`; // Use template literal to insert the phone number
       }
 
       // Function to send an email
-      function sendMail() {
-        window.location.href = "mailto:someone@example.com"; // Replace with the email
+      function sendMail(card) {
+        window.location.href = `mailto:${card.email}`; // Use template literal to insert the email
       }
 
       // Function to send a message
-      function sendMessage() {
-        window.location.href = "sms:+1234567890"; // Replace with the phone number
+      function sendMessage(card) {
+        window.location.href = `sms:${card.phone}`; // Use template literal to insert the phone number
       }
     </script>
   </head>
