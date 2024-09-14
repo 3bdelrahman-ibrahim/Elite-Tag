@@ -377,16 +377,34 @@ END:VCARD
       }
 
       function shareVCard(card) {
-        const shareData = {
-          title: "Card Details",
-          text: `Check out ${card.name || "this contact"}!`,
-          url: window.location.href,
-        };
+        const vCardData = `
+BEGIN:VCARD
+VERSION:3.0
+FN:${card.name}
+PHOTO:${card.imageUrl || "http://example.com/photo.jpg"}
+TEL;TYPE=CELL:${card.phone || "1234567890"}
+EMAIL:${card.email || "example@example.com"}
+TITLE:${card.job || "Job Title"}
+END:VCARD
+    `;
+
+        const blob = new Blob([vCardData], { type: "text/vcard" });
+        const file = new File([blob], `${card.name || "Contact"}.vcf`, {
+          type: "text/vcard",
+        });
 
         if (navigator.share) {
-          navigator.share(shareData).catch(console.error);
+          navigator
+            .share({
+              title: `${card.name || "Contact"}`,
+              text: "Here's a contact card for you!",
+              files: [file],
+            })
+            .catch((error) => {
+              console.error("Error sharing:", error);
+            });
         } else {
-          alert("Share functionality is not supported on this browser.");
+          console.warn("Web Share API not supported in this browser.");
         }
       }
       // Function to make a call
