@@ -390,17 +390,29 @@ END:VCARD
       }
       // Function to make a call
       function makeCall(card) {
-        window.location.href = `tel:${card.phone}`; // Use template literal to insert the phone number
+        if (card.phone) {
+          window.location.href = `tel:${card.phone}`; // Use template literal to insert the phone number
+        } else {
+          alert("Phone number is not available.");
+        }
       }
 
       // Function to send an email
       function sendMail(card) {
-        window.location.href = `mailto:${card.email}`; // Use template literal to insert the email
+        if (card.email) {
+          window.location.href = `mailto:${card.email}`; // Use template literal to insert the email
+        } else {
+          alert("Email address is not available.");
+        }
       }
 
       // Function to send a message
       function sendMessage(card) {
-        window.location.href = `sms:${card.phone}`; // Use template literal to insert the phone number
+        if (card.phone) {
+          window.location.href = `sms:${card.phone}`; // Use template literal to insert the phone number
+        } else {
+          alert("Phone number is not available.");
+        }
       }
     </script>
   </head>
