@@ -197,28 +197,20 @@
           <h2>${card.name}</h2>
           <h3>${card.job}</h3>
           <div class="button-container">
-<button class="circle-btn" onclick="makeCall(${JSON.stringify(card).replace(
-              /'/g,
-              "\\'"
-            )})">
-  <img class="circle-btn-icon" src="/photos/54.png" alt="Call Icon" />
-</button>
+  <button class="circle-btn" onclick="makeCall('${card.phone}')">
+    <img class="circle-btn-icon" src="/photos/54.png" alt="Call Icon" />
+  </button>
 
-<!-- Mail Button -->
-<button class="circle-btn" onclick="sendMail(${JSON.stringify(card).replace(
-              /'/g,
-              "\\'"
-            )})">
-  <img class="circle-btn-icon" src="/photos/55.png" alt="Mail Icon" />
-</button>
+  <!-- Mail Button -->
+  <button class="circle-btn" onclick="sendMail('${card.email}')">
+    <img class="circle-btn-icon" src="/photos/55.png" alt="Mail Icon" />
+  </button>
 
-<!-- Message Button -->
-<button class="circle-btn" onclick="sendMessage(${JSON.stringify(card).replace(
-              /'/g,
-              "\\'"
-            )})">
-  <img class="circle-btn-icon" src="/photos/56.png" alt="Message Icon" />
-</button>          </div>
+  <!-- Message Button -->
+  <button class="circle-btn" onclick="sendMessage('${card.phone}')">
+    <img class="circle-btn-icon" src="/photos/56.png" alt="Message Icon" />
+  </button>
+  </div>
           <div class="button-container">
           <button onclick='downloadVCard(${JSON.stringify(card).replace(
             /'/g,
