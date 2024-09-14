@@ -13,7 +13,7 @@
         flex-direction: column;
         width: 100vw;
         align-items: center;
-        background: url("../photos/asfs.png") no-repeat center center fixed;
+        background: url("/photos/asfs.png") no-repeat center center fixed;
         background-size: cover;
         color: #fff; /* Ensure text color is readable on dark background */
       }
@@ -177,7 +177,7 @@
 
             // Create card image element
             const img = document.createElement("img");
-            img.src = card.imageUrl || "/../photos/Image.png";
+            img.src = card.imageUrl || "/photos/Image.png";
             img.alt = "Image";
             img.classList.add("card-image");
             cardDetails.appendChild(img);
@@ -193,13 +193,13 @@
           <h3>${card.job}</h3>
           <div class="button-container">
             <button class="circle-btn">
-              <img class="circle-btn-icon" src="../photos/54.png" alt="Icon 1" />
+              <img class="circle-btn-icon" src="/photos/54.png" alt="Icon 1" />
             </button>
             <button class="circle-btn">
-              <img class="circle-btn-icon" src="../photos/55.png" alt="Icon 2" />
+              <img class="circle-btn-icon" src="/photos/55.png" alt="Icon 2" />
             </button>
             <button class="circle-btn">
-              <img class="circle-btn-icon" src="../photos/56.png" alt="Icon 3" />
+              <img class="circle-btn-icon" src="/photos/56.png" alt="Icon 3" />
             </button>
           </div>
           <div class="button-container">
@@ -299,16 +299,16 @@
             let iconSrc = "";
             switch (key.toLowerCase()) {
               case "facebook":
-                iconSrc = "../photos/28.png"; // Path to your local Facebook icon
+                iconSrc = "/photos/28.png"; // Path to your local Facebook icon
                 break;
               case "youtube":
-                iconSrc = "../photos/27.png"; // Path to your local YouTube icon
+                iconSrc = "/photos/27.png"; // Path to your local YouTube icon
                 break;
               case "whatsapp":
-                iconSrc = "../photos/24.png"; // Path to your local WhatsApp icon
+                iconSrc = "/photos/24.png"; // Path to your local WhatsApp icon
                 break;
               default:
-                iconSrc = "../photos/done.png"; // Path to your local default icon
+                iconSrc = "/photos/done.png"; // Path to your local default icon
             }
 
             const linkItem = document.createElement("a");
