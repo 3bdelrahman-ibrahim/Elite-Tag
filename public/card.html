@@ -6,7 +6,14 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <title>Card Details</title>
+    <link
+      id="favicon"
+      rel="icon"
+      href="/photos/IMG_6204.png"
+      type="image/png"
+    />
+
+    <title>Card</title>
     <style>
       body {
         border-radius: 20px;
@@ -193,6 +200,51 @@
       }
 
       // Fetch card details from Firestore
+      function updateFavicon(imageUrl) {
+        const favicon = document.getElementById("favicon");
+        if (favicon) {
+          favicon.href = imageUrl; // Update the favicon URL
+        }
+      }
+      function setCircularFavicon(imageUrl) {
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+
+        const size = 32; // Favicon size
+        canvas.width = size;
+        canvas.height = size;
+
+        const img = new Image();
+        img.src = imageUrl;
+        img.onload = () => {
+          // Draw circular image
+          context.beginPath();
+          context.arc(size / 2, size / 2, size / 2, 0, 2 * Math.PI);
+          context.clip();
+          context.drawImage(img, 0, 0, size, size);
+          context.reset();
+
+          // Convert canvas to data URL
+          const dataURL = canvas.toDataURL("image/png");
+
+          // Update the favicon
+          const favicon = document.getElementById("favicon");
+          if (favicon) {
+            favicon.href = dataURL;
+            alert("favicon.href.");
+          } else {
+            alert("Favicon element not found.");
+          }
+        };
+        img.onerror = () => {
+          alert("Failed to load image for favicon:", imageUrl);
+        };
+      }
+
+      function updateTitle(title) {
+        document.title = `Card - ${title}`; // Set the document title
+      }
+
       async function fetchCardDetails() {
         const cardId = getCardIdFromPath();
         try {
@@ -202,6 +254,10 @@
           if (docSnap.exists()) {
             const card = docSnap.data();
             console.log("Card Data:", card);
+
+            // Update the favicon and title
+            setCircularFavicon(card.imageUrl || "/path/to/default-icon.png");
+            updateTitle(card.name || "Card");
 
             // Populate card details
             const cardDetails = document.getElementById("card-details");
@@ -221,34 +277,30 @@
             const detailsBox = document.createElement("div");
             detailsBox.classList.add("details-box");
             detailsBox.innerHTML = `
-          <h2>${card.name}</h2>
-          <h3>${card.job}</h3>
-          <div class="button-container">
-  <button class="circle-btn" onclick="makeCall('${card.phone}')">
-    <img class="circle-btn-icon" src="/photos/54.png" alt="Call Icon" />
-  </button>
-
-  <!-- Mail Button -->
-  <button class="circle-btn" onclick="sendMail('${card.email}')">
-    <img class="circle-btn-icon" src="/photos/55.png" alt="Mail Icon" />
-  </button>
-
-  <!-- Message Button -->
-  <button class="circle-btn" onclick="sendMessage('${card.phone}')">
-    <img class="circle-btn-icon" src="/photos/56.png" alt="Message Icon" />
-  </button>
-  </div>
-          <div class="button-container">
+        <h2>${card.name}</h2>
+        <h3>${card.job}</h3>
+        <div class="button-container">
+          <button class="circle-btn" onclick="makeCall('${card.phone}')">
+            <img class="circle-btn-icon" src="/photos/54.png" alt="Call Icon" />
+          </button>
+          <button class="circle-btn" onclick="sendMail('${card.email}')">
+            <img class="circle-btn-icon" src="/photos/55.png" alt="Mail Icon" />
+          </button>
+          <button class="circle-btn" onclick="sendMessage('${card.phone}')">
+            <img class="circle-btn-icon" src="/photos/56.png" alt="Message Icon" />
+          </button>
+        </div>
+        <div class="button-container">
           <button onclick='downloadVCard(${JSON.stringify(card).replace(
             /'/g,
             "\\'"
-          )})' class="square-btn">Save </button>
+          )})' class="square-btn">Save</button>
           <button onclick='shareVCard(${JSON.stringify(card).replace(
             /'/g,
             "\\'"
           )})' class="square-btn">Share</button>
-          </div>
-        `;
+        </div>
+      `;
             boxsContainer.appendChild(detailsBox);
             cardDetails.appendChild(boxsContainer);
 
@@ -264,7 +316,10 @@
         }
       }
 
-      // Function to open link using app if available, or fallback to web URL
+      document.addEventListener("DOMContentLoaded", () => {
+        fetchCardDetails();
+      });
+
       function openLinkWithFallback(key, linkUrl) {
         const socialMediaSchemes = {
           Facebook: (link) => `fb://profile/${link.split("/").pop()}`,
