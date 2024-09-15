@@ -3,6 +3,7 @@
   <head>
     <title>Send Message with Location</title>
     <script type="module">
+      // Import Firebase modules
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
       import {
         getFirestore,
@@ -11,6 +12,7 @@
         serverTimestamp,
       } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
+      // Firebase configuration
       const firebaseConfig = {
         apiKey: "AIzaSyABa_88lCPYb9G7C2L350H52UvQGdjNYck",
         appId: "1:507527578334:web:bdb82580e01375de11384f",
@@ -37,7 +39,7 @@
             },
             (error) => {
               console.error("Error getting location", error);
-              alert("Error getting location");
+              alert("Error getting location: " + error.message);
             }
           );
         } else {
