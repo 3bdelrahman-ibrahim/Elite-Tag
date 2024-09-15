@@ -206,40 +206,6 @@
           favicon.href = imageUrl; // Update the favicon URL
         }
       }
-      function setCircularFavicon(imageUrl) {
-        const canvas = document.createElement("canvas");
-        const context = canvas.getContext("2d");
-
-        const size = 32; // Favicon size
-        canvas.width = size;
-        canvas.height = size;
-
-        const img = new Image();
-        img.src = imageUrl;
-        img.onload = () => {
-          // Draw circular image
-          context.beginPath();
-          context.arc(size / 2, size / 2, size / 2, 0, 2 * Math.PI);
-          context.clip();
-          context.drawImage(img, 0, 0, size, size);
-          context.reset();
-
-          // Convert canvas to data URL
-          const dataURL = canvas.toDataURL("image/png");
-
-          // Update the favicon
-          const favicon = document.getElementById("favicon");
-          if (favicon) {
-            favicon.href = dataURL;
-            alert("favicon.href.");
-          } else {
-            alert("Favicon element not found.");
-          }
-        };
-        img.onerror = () => {
-          alert("Failed to load image for favicon:", imageUrl);
-        };
-      }
 
       function updateTitle(title) {
         document.title = `Card - ${title}`; // Set the document title
@@ -256,7 +222,7 @@
             console.log("Card Data:", card);
 
             // Update the favicon and title
-            setCircularFavicon(card.imageUrl || "/path/to/default-icon.png");
+            updateFavicon(card.imageUrl || "/path/to/default-icon.png");
             updateTitle(card.name || "Card");
 
             // Populate card details
