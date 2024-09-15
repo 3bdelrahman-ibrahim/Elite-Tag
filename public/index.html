@@ -1,299 +1,85 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>NFC Card Company - Personal Card Website</title>
-    <style>
-      /* General styles */
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 20px;
-        background-color: #000; /* Black background */
-        color: #00f; /* Blue text */
-        scroll-behavior: smooth; /* Smooth scrolling behavior */
-      }
-
-      header,
-      nav,
-      section,
-      article {
-        padding: 20px;
-        min-height: calc(100vh - 80px);
-        margin: 20px 0;
-        background-color: #222; /* Dark grey for section backgrounds */
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-        opacity: 0;
-        transform: translateY(50px);
-        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-      }
-
-      header {
-        margin: 0;
-        background: url("/photos/IMG_6204.png") no-repeat center center fixed;
-        background-size: cover;
-        color: #fff;
-        text-align: center;
-      }
-
-      nav {
-        position: sticky;
-        top: 10px;
-        background-color: #333;
-        color: white;
-        text-align: center;
-        z-index: 1000;
-        height: auto;
-        min-height: auto;
-      }
-
-      .hidden {
-        opacity: 0;
-        transition: opacity 1.6s ease-out;
-      }
-
-      .visible {
-        opacity: 1;
-        transition: opacity 1.6s ease-in;
-      }
-
-      .active {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      nav {
-        background-color: #181722;
-        color: white;
-        text-align: center;
-      }
-
-      nav a {
-        color: #00f;
-        margin: 0 5px;
-        text-decoration: none;
-      }
-
-      section,
-      article {
-        background-color: #111;
-      }
-
-      .footer {
-        background-color: #000000;
-        color: white;
-        text-align: center;
-        padding: 20px;
-      }
-
-      .part {
-        padding: 20px;
-      }
-
-      .image {
-        max-width: 50%;
-        aspect-ratio: 1;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-      }
-
-      .card-feature {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-      }
-
-      .card-feature img {
-        max-width: 50%;
-        aspect-ratio: 1;
-      }
-
-      .card-feature div {
-        flex: 2;
-      }
-    </style>
+    <title>Send Message</title>
+    <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@firebase/firestore@3.6.0/dist/firestore.umd.js"></script>
   </head>
   <body>
-    <header>
-      <h1>مرحبا بكم في شركتنا للبطاقات NFC</h1>
-      <p>اكتشف أحدث تقنيات البطاقات الذكية.</p>
-    </header>
-
-    <nav>
-      <a href="#home">الرئيسية</a>
-      <a href="#services">الخدمات</a>
-      <a href="#features">مميزاتنا</a>
-      <a href="#contact">اتصل بنا</a>
-    </nav>
-
-    <section id="home" class="part">
-      <h2>عن شركتنا</h2>
-      <div class="card-feature">
-        <img src="/photos/IMG_6204.png" alt="Company Overview" class="image" />
-        <div>
-          <p>
-            نحن نقدم مجموعة متنوعة من بطاقات NFC المبتكرة التي تلبي جميع
-            احتياجاتك. سواء كنت تبحث عن بطاقة تعريفية أو بطاقة لمدفوعات آمنة،
-            لدينا الحل المثالي. تمتاز بطاقاتنا بالجودة العالية والأمان المتقدم
-            لضمان حماية بياناتك.
-          </p>
-          <p>
-            منذ انطلاقنا في السوق، ونحن نعمل على تقديم أفضل الخدمات والحلول
-            المبتكرة. هدفنا هو تحسين تجربة العملاء باستخدام التكنولوجيا
-            المتطورة.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section id="services" class="part">
-      <h2>خدماتنا</h2>
-      <div class="card-feature">
-        <img src="/photos/IMG_6204.png" alt="NFC ID Cards" class="image" />
-        <div>
-          <h3>بطاقات تعريفية</h3>
-          <p>
-            نقدم بطاقات تعريفية عالية الجودة تتناسب مع احتياجات الأعمال
-            المختلفة، مع دعم لتقنيات NFC لسهولة مشاركة المعلومات بشكل فوري وآمن.
-          </p>
-        </div>
-      </div>
-      <div class="card-feature">
-        <div>
-          <h3>حلول الدفع</h3>
-          <p>
-            بطاقات NFC آمنة وسهلة الاستخدام لحلول الدفع الإلكتروني، مما يجعل
-            معاملاتك أكثر أمانًا وراحة.
-          </p>
-        </div>
-      </div>
-      <div class="card-feature">
-        <img
-          src="/photos/IMG_6204.png"
-          alt="Custom NFC Designs"
-          class="image"
-        />
-        <div>
-          <h3>تصاميم مخصصة</h3>
-          <p>
-            نوفر تصاميم مبتكرة ومخصصة لبطاقات NFC الخاصة بك. سواء كنت تحتاج إلى
-            تصميم مميز لشركتك أو مناسبتك، نحن نقدم حلولاً مبتكرة.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section id="features" class="part">
-      <h2>مميزاتنا</h2>
-      <div class="card-feature">
-        <img
-          src="/photos/IMG_6204.png"
-          alt="Advanced NFC Technology"
-          class="image"
-        />
-        <div>
-          <p>
-            - تقنية NFC المتقدمة التي تضمن سهولة الاستخدام.<br />
-            - تصاميم مخصصة ومبتكرة تتناسب مع جميع الاحتياجات.<br />
-            - دعم فني متواصل لضمان أفضل تجربة للمستخدم.<br />
-            - حلول مرنة تتناسب مع جميع المتطلبات، سواء كانت أعمالًا أو مناسبات.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" class="part">
-      <h2>اتصل بنا</h2>
-      <div class="card-feature">
-        <img src="/photos/IMG_6204.png" alt="Contact Us" class="image" />
-        <div>
-          <p>
-            إذا كان لديك أي استفسارات أو تحتاج إلى مزيد من المعلومات، لا تتردد
-            في التواصل معنا عبر البريد الإلكتروني أو الهاتف. نحن هنا لخدمتك.
-          </p>
-          <p>
-            البريد الإلكتروني: info@nfccompany.com<br />
-            الهاتف: +20 123 456 789
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section id="footer" class="footer">
-      <p>&copy; 2024 جميع الحقوق محفوظة لشركة NFC</p>
-    </section>
+    <h1>Send Message</h1>
+    <form id="messageForm">
+      <label for="name">Name:</label><br />
+      <input type="text" id="name" name="name" /><br /><br />
+      <label for="phone">Phone:</label><br />
+      <input type="tel" id="phone" name="phone" /><br /><br />
+      <label for="message">Message:</label><br />
+      <textarea id="message" name="message"></textarea><br /><br />
+      <button type="button" onclick="getLocation()">Get Location</button
+      ><br /><br />
+      <label for="location">Location:</label><br />
+      <input type="text" id="location" name="location" readonly /><br /><br />
+      <button type="button" onclick="sendMessage()">Send Message</button>
+    </form>
 
     <script>
-      // JavaScript for Scroll Animations
-      const sections = document.querySelectorAll(
-        "header, nav, section, article, footer"
-      );
-
-      const options = {
-        threshold: 0.1,
+      // Firebase configuration
+      const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_PROJECT_ID.appspot.com",
+        messagingSenderId: "YOUR_SENDER_ID",
+        appId: "YOUR_APP_ID",
       };
 
-      const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("active");
-            observer.unobserve(entry.target);
-          }
-        });
-      }, options);
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
 
-      sections.forEach((section) => {
-        observer.observe(section);
-      });
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const latitude = position.coords.latitude;
+              const longitude = position.coords.longitude;
+              document.getElementById(
+                "location"
+              ).value = `${latitude}, ${longitude}`;
+            },
+            (error) => {
+              console.error("Error getting location", error);
+              alert("Error getting location");
+            }
+          );
+        } else {
+          alert("Geolocation is not supported by this browser.");
+        }
+      }
 
-      const parts = document.querySelectorAll("section, article");
-      const scrollOptions = {
-        threshold: 0.5,
-      };
+      function sendMessage() {
+        const name = document.getElementById("name").value;
+        const phone = document.getElementById("phone").value;
+        const location = document.getElementById("location").value;
+        const message = document.getElementById("message").value;
 
-      const scrollObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-          }
-        });
-      }, scrollOptions);
-
-      parts.forEach((part) => {
-        scrollObserver.observe(part);
-      });
-
-      document.addEventListener("DOMContentLoaded", () => {
-        const nav = document.querySelector("nav");
-        const showNavPoint = window.innerHeight;
-
-        const checkScrollPosition = () => {
-          if (window.scrollY > showNavPoint) {
-            nav.classList.remove("hidden");
-            nav.classList.add("visible");
-          } else {
-            nav.classList.remove("visible");
-            nav.classList.add("hidden");
-          }
-        };
-
-        const debounce = (func, wait) => {
-          let timeout;
-          return function (...args) {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func.apply(this, args), wait);
-          };
-        };
-
-        checkScrollPosition();
-        window.addEventListener("scroll", debounce(checkScrollPosition, 100));
-      });
+        db.collection("messages")
+          .add({
+            name: name,
+            phone: phone,
+            location: location,
+            message: message,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          })
+          .then(() => {
+            alert("Message sent successfully!");
+          })
+          .catch((error) => {
+            console.error("Error sending message", error);
+            alert("Failed to send message");
+          });
+      }
     </script>
   </body>
 </html>
