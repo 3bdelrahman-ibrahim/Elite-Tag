@@ -159,25 +159,14 @@
         top: 50%;
         transform: translateY(-50%);
       }
-      @media (min-width: 450px) {
-        body {
-          flex-direction: row;
-          justify-content: space-around;
-        }
-        #card-details {
-          width: 40%;
-        }
-        .links-box {
-          width: 40%; /* Make the link occupy full width */
-        }
-      }
+
       .loader {
         transform: rotateZ(45deg);
         perspective: 1000px;
         border-radius: 50%;
         width: 48px;
         height: 48px;
-        color: #0033ff;
+        color: #4469ff;
       }
       .loader:before,
       .loader:after {
@@ -193,7 +182,7 @@
         animation: 1s spin linear infinite;
       }
       .loader:after {
-        color: #dd16d7;
+        color: #f76cf2;
         transform: rotateY(70deg);
         animation-delay: 0.4s;
       }
@@ -249,6 +238,23 @@
 
       body.no-scroll {
         overflow: hidden;
+      }
+      @media (min-width: 450px) {
+        body {
+          flex-direction: row;
+          justify-content: space-around;
+        }
+        #card-details {
+          width: 40%;
+        }
+        .links-box {
+          width: 40%; /* Make the link occupy full width */
+        }
+      }
+      @media (max-width: 449px) {
+        .loader {
+          margin-top: 50vh;
+        }
       }
     </style>
     <script type="module">
