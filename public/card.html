@@ -19,11 +19,20 @@
         background-size: cover;
         color: #fff;
         background-color: #121212; /* Dark background color */
+        min-height: 100vh;
       }
-
+      @media (min-width: 450px) {
+        body {
+          flex-direction: row;
+          justify-content: space-around;
+        }
+        .card-image {
+          border-radius: 50%;
+        }
+      }
       #card-details {
         width: 100%;
-        max-width: 420px;
+        max-width: 450px;
         text-align: center;
         position: relative;
       }
@@ -43,6 +52,7 @@
           rgba(0, 0, 0, 0) 90%
         );
       }
+
       .boxs-container {
         position: relative;
         transform: translateY(-100px);
@@ -108,8 +118,8 @@
         background: rgba(0, 0, 0, 0.7); /* Black background with 70% opacity */
         backdrop-filter: blur(10px); /* Apply blur effect */
         padding: 20px;
-        width: 85%;
-        max-width: 600px;
+        width: 80%;
+        max-width: 400px;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         text-align: center;
