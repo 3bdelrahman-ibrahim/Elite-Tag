@@ -1,12 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/",
-      "destination": "/index.html"
+      "source": "/:id*",
+      "destination": "/card.html"
     },
     {
-      "source": "/id/:id*",
-      "destination": "/card.html"
+      "source": "/",
+      "destination": "/index.html"
     }
   ]
 }
