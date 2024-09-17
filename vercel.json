@@ -5,7 +5,7 @@
       "destination": "/card.html"
     },
     {
-      "source": "/",
+      "source": "/home",
       "destination": "/index.html"
     }
   ]
